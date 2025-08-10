@@ -1129,3 +1129,14 @@ section {
     animation: none !important;
   }
 }
+
+/* === User request: Disable holographic overlay and keep only shadow on hover === */
+.portfolio-card::before,
+.portfolio-card:hover::before {
+    opacity: 0 !important;
+    transform: none !important;
+}
+
+.portfolio-card:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
+}
