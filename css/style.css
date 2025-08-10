@@ -984,34 +984,34 @@ section {
 .portfolio-card:hover .iframe-container iframe {
     pointer-events: auto;
 }
-/* === Patch: Disable all hover effects in portfolio grid (requested) === */
-#portfolio-grid .portfolio-card,
-#portfolio-grid .portfolio-card * {
+/* === Portfolyo hover tamamen kapalı === */
+#portfolio-grid .no-hover,
+#portfolio-grid .no-hover * {
   transition: none !important;
   transform: none !important;
   opacity: 1 !important;
   filter: none !important;
 }
 
-#portfolio-grid .portfolio-card:hover,
-#portfolio-grid .portfolio-card:hover * {
+/* Hover'da hiçbir değişiklik olmasın */
+#portfolio-grid .no-hover:hover,
+#portfolio-grid .no-hover:hover * {
   transform: none !important;
   opacity: 1 !important;
   filter: none !important;
   box-shadow: inherit !important;
 }
 
-#portfolio-grid .portfolio-card::before,
-#portfolio-grid .portfolio-card:hover::before {
-  opacity: 0 !important;
-  transform: none !important;
-}
-
+/* İframe'ler sabit kalsın */
 #portfolio-grid .iframe-container iframe {
   pointer-events: auto !important;
-}
-#portfolio-grid .portfolio-card:hover .iframe-container iframe {
-  pointer-events: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-
+/* Overlay'leri tamamen kapat */
+#portfolio-grid .iframe-container::before,
+#portfolio-grid .iframe-container::after {
+  display: none !important;
+}
