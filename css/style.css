@@ -186,19 +186,9 @@ html {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.card-img-wrapper {
-    position: relative;
-    overflow: hidden;
+.portfolio-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-
-.card-img-wrapper img {
-    height: 250px;
-    object-fit: cover;
-}
-
-
-
-/* About Section */
 .skills-list .skill-item {
     margin-bottom: 1.5rem;
 }
@@ -794,44 +784,8 @@ section {
     background: #fff;
     border-radius: 15px;
     cursor: pointer;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
-
-/* Card content positioning */
-.portfolio-card .card-body {
-    position: relative;
-    z-index: 2;
-    background: #fff;
-    border-radius: 15px;
-}
-
-/* Iframe container styling */
-.iframe-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0 0 15px 15px;
-}
-
-/* removed: transform on iframe-container to avoid iframe blanking */
-
-/* Title hover effect */
-.portfolio-card .card-title {
-    position: relative;
-}
-
-/* Sparkle effect */
-
-/* Mobile responsive adjustments */
-
-/* Reduce motion for users who prefer it */
-@media (prefers-reduced-motion: reduce) {
-    .portfolio-card {
-        transition: box-shadow 0.3s ease;
-    }
-}
-
-
-
-/* Portfolio iframe styling */
 .iframe-container {
     width: 100%;
     height: 280px;
@@ -1013,3 +967,22 @@ section {
 .portfolio-card:hover {
     box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
 }
+
+
+.portfolio-card:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+.iframe-container iframe {
+    pointer-events: none;
+}
+
+.portfolio-card:hover .iframe-container iframe {
+    pointer-events: auto;
+}
+
+
