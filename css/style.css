@@ -903,7 +903,6 @@ section {
     position: relative;
     overflow: hidden;
     border-radius: 0 0 15px 15px;
-    transition: all 0.3s ease;
 }
 
 /* removed: transform on iframe-container to avoid iframe blanking */
