@@ -984,5 +984,34 @@ section {
 .portfolio-card:hover .iframe-container iframe {
     pointer-events: auto;
 }
+/* === Patch: Disable all hover effects in portfolio grid (requested) === */
+#portfolio-grid .portfolio-card,
+#portfolio-grid .portfolio-card * {
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+#portfolio-grid .portfolio-card:hover,
+#portfolio-grid .portfolio-card:hover * {
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  box-shadow: inherit !important;
+}
+
+#portfolio-grid .portfolio-card::before,
+#portfolio-grid .portfolio-card:hover::before {
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+#portfolio-grid .iframe-container iframe {
+  pointer-events: auto !important;
+}
+#portfolio-grid .portfolio-card:hover .iframe-container iframe {
+  pointer-events: auto !important;
+}
 
 
