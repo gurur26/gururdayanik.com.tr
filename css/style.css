@@ -176,57 +176,57 @@ html {
     transform: translateY(-2px);
 }
 
-
-/* Holographic hover efekti - portfolio-card için */
 .portfolio-card {
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-img-wrapper {
     position: relative;
     overflow: hidden;
-    border-radius: 15px;
-    transition: transform .5s ease, box-shadow .5s ease;
-    will-change: transform;
 }
 
-/* Parıltı şeridi */
-.portfolio-card::before {
-    content: '';
+.card-img-wrapper img {
+    transition: transform 0.3s ease;
+    height: 250px;
+    object-fit: cover;
+}
+
+.portfolio-card:hover .card-img-wrapper img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        0deg,
-        transparent,
-        transparent 30%,
-        rgba(0,255,255,0.35)
-    );
-    transform: rotate(-45deg);
-    transition: opacity .5s ease, transform .5s ease;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(59, 130, 246, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
-    pointer-events: none; /* iframe tıklanabilir kalsın */
-    z-index: 3;
+    transition: opacity 0.3s ease;
 }
 
-/* Hover efekti */
-.portfolio-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 20px rgba(0,255,255,0.45);
-}
-
-.portfolio-card:hover::before {
+.portfolio-card:hover .card-overlay {
     opacity: 1;
-    transform: rotate(-45deg) translateY(100%);
 }
 
-/* Kenar iç ışıma */
-.portfolio-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 15px;
-    box-shadow: inset 0 0 0 1px rgba(0,255,255,.15);
-    pointer-events: none;
-    z-index: 2;
+.overlay-content {
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.portfolio-card:hover .overlay-content {
+    transform: translateY(0);
 }
 
 /* About Section */
@@ -906,9 +906,7 @@ section {
     transition: all 0.3s ease;
 }
 
-.portfolio-card:hover .iframe-container {
-    transform: scale(1.02);
-}
+/* removed: transform on iframe-container to avoid iframe blanking */
 
 /* Title hover effect */
 .portfolio-card .card-title {
@@ -974,16 +972,8 @@ section {
     border: none;
     border-radius: 8px;
 }
+/* removed broken fragment to avoid CSS parse issues */
 
-
-
-t: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    z-index: 0;
-}
 
 /* Hero content typography improvements */
 .hero-content h1 {
@@ -1053,3 +1043,46 @@ t: 0;
     }
 }
 
+/* === Patch: Prevent iframe blanking on hover & add holographic overlay safely === */
+
+/* Keep iframes above overlays and prevent flicker */
+.portfolio-card .iframe-container,
+.portfolio-card .iframe-container iframe {
+    position: relative;
+    z-index: 2;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: auto;
+}
+
+/* Ensure holographic overlay stays below iframe */
+.portfolio-card::before {
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* If a portfolio-card contains an iframe, disable transforms on hover to avoid blanking */
+.portfolio-card:has(.iframe-container iframe):hover {
+    transform: none !important;
+    /* keep a strong glow without scaling */
+    box-shadow: 0 0 20px rgba(0,255,255,0.45), var(--shadow-lg);
+    filter: brightness(1.02);
+}
+
+/* Fallback for browsers without :has() — all portfolio cards skip transform on hover */
+@supports not selector(.portfolio-card:has(.iframe-container iframe)) {
+    .portfolio-card:hover {
+        transform: none !important;
+        box-shadow: 0 0 20px rgba(0,255,255,0.45), var(--shadow-lg);
+        filter: brightness(1.02);
+    }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .portfolio-card, 
+    .portfolio-card::before {
+        transition: none;
+        animation: none;
+    }
+}
