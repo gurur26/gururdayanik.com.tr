@@ -2,8 +2,4 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gururda1/public_html/
     - /bin/mkdir -p "$DEPLOYPATH"
-    - /bin/rsync -a --delete \
-        --exclude='.git' \
-        --exclude='.cpanel.yml' \
-        --exclude='README.md' \
-        ./ "$DEPLOYPATH"
+    - /bin/rsync -a --delete --exclude='.git' --exclude='.cpanel.yml' ./ "$DEPLOYPATH"
