@@ -50,35 +50,44 @@ function initSmoothScrolling() {
     });
 }
 
+// Portfolio filtering functionality
 function initPortfolioFilter() {
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-  filterButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const filter = this.getAttribute('data-filter');
-
-      // aktif buton stilleri
-      filterButtons.forEach(btn => btn.classList.remove('active','btn-primary'));
-      filterButtons.forEach(btn => btn.classList.add('btn-outline-primary'));
-      this.classList.remove('btn-outline-primary');
-      this.classList.add('active','btn-primary');
-
-      // sadece display ile göster/gizle (opacity/transform YOK)
-      portfolioItems.forEach(item => {
-        const category = item.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
-          item.style.display = 'block';
-          item.classList.remove('hidden');
-        } else {
-          item.style.display = 'none';
-          item.classList.add('hidden');
-        }
-      });
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
+            filterButtons.forEach(btn => btn.classList.add('btn-outline-primary'));
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('active', 'btn-primary');
+            
+            // Filter portfolio items
+            portfolioItems.forEach(item => {
+                const category = item.getAttribute('data-category');
+                
+                if (filter === 'all' || category === filter) {
+                    item.style.display = 'block';
+                    item.classList.remove('hidden');
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 100);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                        item.classList.add('hidden');
+                    }, 300);
+                }
+            });
+        });
     });
-  });
 }
-
 
 // Navbar scroll effect
 function initNavbarScrollEffect() {
