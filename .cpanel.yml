@@ -2,6 +2,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gururda1/public_html/
     - /bin/mkdir -p "$DEPLOYPATH"
-    - (/bin/rsync -a --delete --exclude='.git' --exclude='.cpanel.yml' ./ "$DEPLOYPATH") \
-      || (/bin/cp -a ./ "$DEPLOYPATH")
+    - /bin/find "$DEPLOYPATH" -mindepth 1 -maxdepth 1 -exec /bin/rm -rf {} \;
+    - /bin/cp -a ./ "$DEPLOYPATH"
     - /bin/find "$DEPLOYPATH" -name ".git" -type d -prune -exec /bin/rm -rf {} +
